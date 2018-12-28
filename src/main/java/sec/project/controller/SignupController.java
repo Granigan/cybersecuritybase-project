@@ -16,7 +16,27 @@ public class SignupController {
 
     @RequestMapping("*")
     public String defaultMapping() {
-        return "redirect:/form";
+        return "default";
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    public String register() {
+        return "register";
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login() {
+        return "redirect:/default";
+    }
+
+    @RequestMapping(value = "/messages", method = RequestMethod.GET)
+    public String messages() {
+        return "redirect:/default";
+    }
+
+    @RequestMapping(value = "/post", method = RequestMethod.GET)
+    public String post() {
+        return "redirect:/default";
     }
 
     @RequestMapping(value = "/form", method = RequestMethod.GET)
