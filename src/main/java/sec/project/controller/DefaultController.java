@@ -1,6 +1,5 @@
 package sec.project.controller;
 
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +16,7 @@ public class DefaultController {
 
     @Autowired
     private UserRepository userRepo;
-    
+
     @Autowired
     private PostRepository postRepo;
 
@@ -32,6 +31,12 @@ public class DefaultController {
         return "register";
     }
 
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public String submitForm(@RequestParam String username, @RequestParam String password, @RequestParam String answer) {
+        userRepo.save(new User(username, password, answer));
+        return "redirect:/default";
+    }
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loadLogin() {
         return "redirect:/default";
@@ -39,23 +44,18 @@ public class DefaultController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String doLogin() {
-        return "redirect:/messages";
-    }
-
-    @RequestMapping(value = "/post", method = RequestMethod.GET)
-    public String post() {
         return "redirect:/default";
     }
 
-    @RequestMapping(value = "/form", method = RequestMethod.GET)
-    public String loadForm() {
-        return "form";
+    @RequestMapping(value = "/post", method = RequestMethod.GET)
+    public String loadPost() {
+        return "post";
     }
 
-    @RequestMapping(value = "/form", method = RequestMethod.POST)
-    public String submitForm(@RequestParam String username, @RequestParam String password, @RequestParam String answer) {
-        userRepo.save(new User(username, password, answer));
-        return "redirect:/messages";
+    @RequestMapping(value = "/post", method = RequestMethod.POST)
+    public String post(@RequestParam String message) {
+        postRepo.save(new Post(10, message));
+        return "redirect:/default";
     }
 
 }
