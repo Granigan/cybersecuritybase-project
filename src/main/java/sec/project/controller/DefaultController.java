@@ -6,13 +6,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import sec.project.domain.Signup;
-import sec.project.repository.SignupRepository;
+import sec.project.domain.User;
+import sec.project.repository.UserRepository;
 
 @Controller
-public class SignupController {
+public class DefaultController {
 
     @Autowired
-    private SignupRepository signupRepository;
+    private UserRepository userRepo;
 
     @RequestMapping("*")
     public String defaultMapping() {
@@ -25,8 +26,13 @@ public class SignupController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login() {
+    public String loadLogin() {
         return "redirect:/default";
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String doLogin() {
+        return "redirect:/messages";
     }
 
     @RequestMapping(value = "/messages", method = RequestMethod.GET)
@@ -45,9 +51,9 @@ public class SignupController {
     }
 
     @RequestMapping(value = "/form", method = RequestMethod.POST)
-    public String submitForm(@RequestParam String name, @RequestParam String address) {
-        signupRepository.save(new Signup(name, address));
-        return "done";
+    public String submitForm(@RequestParam String username, @RequestParam String password, @RequestParam String answer) {
+        userRepo.save(new User(username, password, answer));
+        return "redirect:/messages";
     }
 
 }

@@ -1,16 +1,20 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Log in to the Site</title>
     </head>
+
     <body>
-        <div>TODO write content</div>
+        <div><a href="/default">Back</a></div>
+
+        <h1>Log in</h1>
+
+        <form action="#" th:action="@{/login}" method="POST">
+            <p><label for="username">Username</label>: <input type="utext" name="username" id="name"/></p>
+            <p><label for="password">Password</label>: <input type="utext" name="password" id="address"/></p>
+            <p><input type="submit" value="Log in" /></p>
+        </form>
+        <p>If you forgot your password, please put in your username and the answer to the secret question here to change your password.</p>
+        
     </body>
 </html>
