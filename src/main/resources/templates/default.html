@@ -10,9 +10,25 @@
         <ul>
             <li><a href="/register">Register a new user</a></li>
             <li><a href="/login">Log in to the Site</a></li>
-            <li><a href="/messages">See messages</a></li>
             <li><a href="/post">Post a message</a></li>
         </ul>
+        
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Post by</th>
+                        <th>Message</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="post : ${posts}">
+                        <td><span th:text="${post.userId}">Post by</span></td>
+                        <td><span th:text="${post.message}">Post by</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
     </body>
 </html>

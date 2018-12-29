@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import sec.project.domain.Post;
 import sec.project.domain.User;
 import sec.project.repository.PostRepository;
 import sec.project.repository.UserRepository;
@@ -29,6 +30,11 @@ public class CustomUserDetailsService implements UserDetailsService {
         userRepo.save(def);
         User admin = new User("admin", "admin", "january");
         userRepo.save(admin);
+        
+        postRepo.save(new Post(1, "first!"));
+        postRepo.save(new Post(2, "that's so childish"));
+        postRepo.save(new Post(1, "lol u mad"));
+        postRepo.save(new Post(3, "stop or i banz"));
     }
     
     @Override
