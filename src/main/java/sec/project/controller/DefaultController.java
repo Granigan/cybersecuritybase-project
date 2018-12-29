@@ -27,23 +27,26 @@ public class DefaultController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String register() {
+    public String loadRegister() {
         return "register";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String submitForm(@RequestParam String username, @RequestParam String password, @RequestParam String answer) {
+    public String doRegister(@RequestParam String username, @RequestParam String password, @RequestParam String answer) {
         userRepo.save(new User(username, password, answer));
         return "redirect:/default";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loadLogin() {
-        return "redirect:/default";
+        return "login";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String doLogin() {
+    public String doLogin(@RequestParam String username, @RequestParam String password) {
+        if(userRepo.findByUsername(username).getPassword().equals(password)) {
+            // luo auth
+        }
         return "redirect:/default";
     }
 
@@ -53,7 +56,7 @@ public class DefaultController {
     }
 
     @RequestMapping(value = "/post", method = RequestMethod.POST)
-    public String post(@RequestParam String message) {
+    public String doPost(@RequestParam String message) {
         postRepo.save(new Post(10, message));
         return "redirect:/default";
     }

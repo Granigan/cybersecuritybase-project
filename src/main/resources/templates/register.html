@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Register to the site</title>
+        <title>The Site</title>
     </head>
     <body>
         <div><a href="/default">Back</a></div>
 
         <h1>Register by giving your information</h1>
 
-        <form action="#" th:action="@{/form}" method="POST">
+        <form action="#" th:action="@{/register}" method="POST">
             <p><label for="username">Username</label>: <input type="utext" name="username" id="name"/></p>
             <p><label for="password">Password</label>: <input type="utext" name="password" id="password"/></p>
             <p><label for="answer">Month you were born in</label>: <input type="utext" name="answer" id="answer"/></p>
