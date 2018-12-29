@@ -1,10 +1,12 @@
 # Cyber Security Project - Helsinki University CompSci
 
+Uses the course template. Clone, open and run in e.g. NetBeans.
+
 ## Site Functionality
+- See all messages
 - Register
 - Login
-- Edit user details
-- See all messages
+- Change password
 - Post a message
 
 ## Flaws
@@ -12,6 +14,7 @@
 #### Problem
 SQL injection is possible in the register screen.
 #### Example
+**If you test this, you'll need to restart the app as there's not much the app can do with a broken db.**
 Running the below injection in the Month field will cause the database to drop the entire Post table. Any other SQL command could also be ran, e.g. changing all the passwords.
 ```aa'); DROP TABLE Post; UPDATE User SET month = 'lol' WHERE ('kek' = 'bur```
 #### Solution
@@ -21,7 +24,7 @@ Sanitise the input instead of running it directly in to the database.
 #### Problem
 Allows password reset with knowledge-based answers.
 #### Example
-Finding out the birth month is often trivial through e.g. Google search. All our default users happened to be born in January.
+Choose one of the usernames from the message lists, then follow the Forget password? link and start testing months until you find a match. *All our default users happened to be born in January.* In real life, finding out the birth month is often trivial through e.g. Google search.
 #### Solution
 Remove any knowledge-based reset, and require e.g. email confirmation for resetting the password.
 
@@ -37,7 +40,7 @@ Use encryption! Java Spring uses BCrypt be default, don't mess with it like on t
 #### Problem
 Unauthorized content, such as each user's personal page (where you can also change their password!) can be accessed with direct GET requests.
 #### Example
-[Modify admin's password](http://localhost:8080/reset/admin)
+[Modify admin's password](http://localhost:8080/edit/admin)
 #### Solution
 Add authorisation to each request as needed.
 
@@ -49,15 +52,3 @@ Typing the below into a post will cause the script to always be run on every bro
 ```<script> alert("hi"); </script> lol```
 #### Solution
 Sanitise the input to be shown on the site.
-
-
-
-
-
-### A9: Using Components with Known Vulnerabilities
-#### Problem
-#### Example
-#### Solution
-Old Java Spring has various vulnerabilities.
-
-

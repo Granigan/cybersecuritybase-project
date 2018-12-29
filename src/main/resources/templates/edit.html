@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>The Site</title>
+    </head>
+    <body>
+        <div><a href="/default">Back</a></div>
+
+        <h1>Password reset for <span th:utext="${user.username}">un</span></h1>
+
+        <form action="#" th:action="@{/edit}" method="POST">
+            <p><label for="username">Username</label>: <input type="text" th:value="${user.username}" id="username" name="username" readonly="readonly" /></p>
+            <p><label for="password">New password</label>: <input type="utext" name="password" id="password"/></p>
+            <p><input type="submit" value="Submit" /></p>
+        </form>
+
+    </body>
+</html>
