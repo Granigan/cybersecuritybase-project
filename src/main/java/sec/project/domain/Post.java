@@ -6,25 +6,25 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Entity
 public class Post extends AbstractPersistable<Long> {
 
-    private long userId;
+    private String username;
     private String message;
 
     public Post() {
         super();
     }
 
-    public Post(long userId, String message) {
+    public Post(String username, String message) {
         this();
-        this.userId = userId;
+        this.username = username;
         this.message = message;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public long getUserId() {
-        return userId;
+    public String getUsername() {
+        return username;
     }
 
     public void setMessage(String message) {

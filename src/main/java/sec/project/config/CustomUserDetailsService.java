@@ -31,10 +31,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         User admin = new User("admin", "admin", "January");
         userRepo.save(admin);
         
-        postRepo.save(new Post(1, "first!"));
-        postRepo.save(new Post(2, "that's so childish"));
-        postRepo.save(new Post(1, "lol u mad"));
-        postRepo.save(new Post(3, "stop or i banz"));
+        postRepo.save(new Post("username", "first!"));
+        postRepo.save(new Post("default", "that's so childish"));
+        postRepo.save(new Post("username", "lol u mad"));
+        postRepo.save(new Post("admin", "stop or i banz"));
     }
     
     @Override

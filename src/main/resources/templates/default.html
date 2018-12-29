@@ -24,7 +24,7 @@
                 </thead>
                 <tbody>
                     <tr th:each="post : ${posts}">
-                        <td><span th:utext="${post.userId}">Post by</span></td>
+                        <td><span th:utext="${post.username}">Post by</span></td>
                         <td><span th:utext="${post.message}">Post by</span></td>
                     </tr>
                 </tbody>
