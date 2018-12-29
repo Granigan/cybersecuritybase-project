@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>The Site</title>
+    </head>
+    <body>
+        <div><a href="/default">Back</a></div>
+
+        <h1>Give your username and month of birth to change your password.</h1>
+
+        <form action="#" th:action="@{/reset}" method="POST">
+            <p><label for="username">Username</label>: <input type="utext" name="username" id="username"/></p>
+            <p><label for="month">Month you were born in</label>: <input type="utext" name="month" id="month"/></p>
+            <p><input type="submit" value="Submit" /></p>
+        </form>
+
+        <p></p>
+    </body>
+</html>
