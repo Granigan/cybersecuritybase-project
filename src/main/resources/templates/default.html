@@ -10,7 +10,8 @@
         <ul>
             <li><a href="/register">Register a new user</a></li>
             <li><a href="/login">Log in to the Site</a></li>
-            <li><a href="/post">Post a message</a></li>
+            <li><a href="/reset">Forgotten password?</a></li>
+            <li><a href="/post">Post a message (need to be logged in)</a></li>
         </ul>
         
         <div>
@@ -23,8 +24,8 @@
                 </thead>
                 <tbody>
                     <tr th:each="post : ${posts}">
-                        <td><span th:text="${post.userId}">Post by</span></td>
-                        <td><span th:text="${post.message}">Post by</span></td>
+                        <td><span th:utext="${post.userId}">Post by</span></td>
+                        <td><span th:utext="${post.message}">Post by</span></td>
                     </tr>
                 </tbody>
             </table>

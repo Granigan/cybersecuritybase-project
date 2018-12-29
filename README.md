@@ -10,35 +10,49 @@
 ## Flaws
 ### A1: Injection
 #### Problem
-SQL injection is possible in the login screen.
+SQL injection is possible in the register screen.
 #### Example
-``` example code ```
+Running the below injection in the Month field will cause the database to drop the entire Post table. Any other SQL command could also be ran, e.g. changing all the passwords.
+```aa'); DROP TABLE Post; UPDATE User SET month = 'lol' WHERE ('kek' = 'bur```
 #### Solution
-Sanitise the input instead of running it directly in the database.
+Sanitise the input instead of running it directly in to the database.
 
 ### A2: Broken Authentication
 #### Problem
 Allows password reset with knowledge-based answers.
 #### Example
+Finding out the birth month is often trivial through e.g. Google search. All our default users happened to be born in January.
 #### Solution
+Remove any knowledge-based reset, and require e.g. email confirmation for resetting the password.
 
 ### A3: Sensitive Data Exposure
 #### Problem
-#### Example
-#### Solution
 Passwords are stored in plain text.
+#### Example
+Any unauthorised access to the database would mean all the usernames and passwords are instantly available to the attacker - these may also be in use on other sites.
+#### Solution
+Use encryption! Java Spring uses BCrypt be default, don't mess with it like on this site.
 
 ### A5: Broken Access Control
 #### Problem
+Unauthorized content, such as each user's personal page (where you can also change their password!) can be accessed with direct GET requests.
 #### Example
+[Modify admin's password](http://localhost:8080/reset/admin)
 #### Solution
-Unauthorized content can be accessed with direct GET requests.
+Add authorisation to each request as needed.
 
 ### A7: Cross-Site Scripting (XSS)
 #### Problem
+Malicious JS script can be inserted into the page via making a post.
 #### Example
+Typing the below into a post will cause the script to always be run on every browser accessing the default page. This time the script is harmless enough, but could e.g. be used to send cookie info to the attacker.
+```<script> alert("hi"); </script> lol```
 #### Solution
-Malicious JS script can be inserted into the page.
+Sanitise the input to be shown on the site.
+
+
+
+
 
 ### A9: Using Components with Known Vulnerabilities
 #### Problem

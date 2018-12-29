@@ -10,17 +10,17 @@ public class User extends AbstractPersistable<Long> {
     @Column(unique = true)
     private String username;
     private String password;
-    private String answer;
+    private String month;
 
     public User() {
         super();
     }
 
-    public User(String name, String password, String answer) {
+    public User(String name, String password, String month) {
         this();
         this.username = name;
         this.password = password;
-        this.answer = answer;
+        this.month = month;
     }
 
     public String getUsername() {
@@ -39,12 +39,12 @@ public class User extends AbstractPersistable<Long> {
         return password;
     }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
+    public void setMonth(String month) {
+        this.month = month;
     }
 
-    public String getAnswer() {
-        return answer;
+    public String getMonth() {
+        return month;
     }
 
 }

@@ -24,11 +24,11 @@ public class CustomUserDetailsService implements UserDetailsService {
     
     @PostConstruct
     public void init() {
-        User user = new User("username", "password", "january");
+        User user = new User("username", "password", "January");
         userRepo.save(user);
-        User def = new User("default", "default", "january");
+        User def = new User("default", "default", "January");
         userRepo.save(def);
-        User admin = new User("admin", "admin", "january");
+        User admin = new User("admin", "admin", "January");
         userRepo.save(admin);
         
         postRepo.save(new Post(1, "first!"));
