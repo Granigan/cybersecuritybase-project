@@ -1,0 +1,71 @@
+The project is available at https://github.com/Granigan/cybersecuritybase-project. See the Readme there for a quick start. Essentially, this report contains the same information as the Readme, but is more verbose and specific. Links probably work better from the Readme. Frankly, with the formatting available in GitHub, I'd recommend first going there and checking back here for further details if and when needed.
+
+The site simulates a simple "forum", where users can register accounts, log in, and read and post comments. Already within this simple functionality there lies a host of vulnerabilities, five of which are detailed here. Others exist, but to stay within the scope of the assignment, the report overlooks them.
+
+To run the site locally on Linux with NetBeans, follow these steps:
+1) Open command prompt
+2) Navigate to the folder you want to store the project in
+3) Run
+git clone git@github.com:Granigan/cybersecuritybase-project.git theSite
+4) Open NetBeans
+5) Choose "Open New Project" under File, and find the folder where you cloned the project into.
+6) Choose theSite folder and open the project.
+7) Open any file of the project, and hit play button in NetBeans. Confirm the Main Class if asked for.
+8) In your faourite browser, open http://localhost:8080
+9) Congratulations, you can now access the site!
+
+Before going through the vulnerabilities in detail, let's first have a closer look at the site structure. The main, or default page shows the posts by users, and hosts links to the various authorisation features; registering, logging in, and reseting the password (via the "Forgotten password?" link), and a link to post a new message. By now it is clear this site is not polished... in fact it barely stays together. There are a million ways to crash the site, but if one sticks to using the features as intended - and abusing the vulnerabilities as intended - the site should fill its purpose.
+
+The site uses a pre-seeded in-memory database, so it always comes with three users (passwords), admin (admin), default (default), and username (password). Despite one being called admin, there is no difference in user levels. If something goes catastrophically wrong with the site - say, someone manages to drop a table from the database - best way to restore the situation is to stop and restart the process in NetBeans.
+
+On to the flaws. Let's begin with the old classic and number one on the OWASP list: 
+
+INJECTION
+In the register screen - and perhaps in other places, an SQL injection is possible. Follow these steps to drop the Post table from the database as a non-authenticated user. **If you test this, you'll need to restart the app as there's not much the app can do with a broken db.**
+1) Open http://localhost:8080/register
+2) Fill username and password fields with "foo"
+3) In the month field, type:
+
+aa'); DROP TABLE Post; UPDATE User SET month = 'lol' WHERE ('kek' = 'bur
+
+4) Click Submit
+5) Notice that the malicious SQL-injection was successful, as the site can no longer query the Post table (and thus cannot e.g. load the default page).
+
+To fix this issue, the user given input needs to be sanitated instead of being directly added to the SQL query. (See method doRegister in https://github.com/Granigan/cybersecuritybase-project/blob/master/src/main/java/sec/project/controller/DefaultController.java)
+
+BROKEN AUTHENTICATION
+Next we'll take a closer look at the "Forgotten password?" feature. It turns out that to change the password for a user, all an unauthenticated user needs to know is a username (which are neatly visible on the main page next to the messages), and the month a user was born (or marked down as their month of birth.) Since there's no limit or checks to how often the password reset can be attempted, it can be assumed that any known username can have its password reset with, on average, six tries. (For the record, all our test users happened to have been born in January.)
+1) Open http://localhost:8080/reset
+2) Fill into username field "admin" and into month field "january"
+3) Click Submit
+4) Fill New password field a password of your choice
+5) Click Submit
+6) Log in with "admin" and the password you chose to see the password was changed without authorisation.
+In real life, finding out the birth month is often trivial through e.g. Google search, and the same goes for other knowledge-based security. One should get rid of these options entirely, and require e.g. email confirmation instead.
+
+SENSITIVE DATA EXPOSURE
+All the passwords on the site are stored in plain text, as the admin decided to use their own UltimateEncoder instead of the default BCrypt one. See https://github.com/Granigan/cybersecuritybase-project/blob/master/src/main/java/sec/project/config/UltimateEncoder.java. This means that any unauthorised access to the database would mean all the usernames and passwords are instantly available to the attacker - these may also be in use on other sites.
+
+BROKEN ACCESS CONTROL
+Remember that awfully easy to get to password reset page? It turns out you don't even need to guess the month right, you can straight up access it with an unauthorised GET request.
+1) Open http://localhost:8080/edit/admin
+2) Fill in a new password of your choice
+5) Click Submit
+6) Log in with "admin" and the password you chose to see the password was changed without authorisation.
+To fix this, the page needs to track the ID matches the one where the password reset test was completed successfully. Though as seen before, that's hardly a problem for the attacker...
+
+CROSS-SITE SCRIPTING (XSS)
+The final vulnerability we'll cover is the injecting malicious JavaScript onto the page. Any logged in user can do this:
+1) Open http://localhost:8080/post
+2) Log in as an existing user (e.g. username - password)
+3) Fill the Message field with
+
+<script> alert("owned"); </script> lol
+
+4) Click Submit
+5) Notice that the injected JS is executed every time you see the default page.
+
+To fix this issue, one must sanitise any and all input to be shown on the site.
+
+
+That's it for the five vulnerabilities. Remember to keep your code safe and secure, and hopefully you won't run into these issues anywhere else!

@@ -1,5 +1,7 @@
 # Cyber Security Project - Helsinki University CompSci
 
+Find the [final report here](report.txt), though this Readme contains mostly the same information, though in brief.
+
 Uses the course template. Clone, then open and run in NetBeans, and [access locally](http://localhost:8080).
 
 ## Site Functionality
