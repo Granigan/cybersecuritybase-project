@@ -38,7 +38,7 @@ Passwords are stored in plain text.
 #### Example
 Any unauthorised access to the database would mean all the usernames and passwords are instantly available to the attacker - these may also be in use on other sites.
 #### Solution
-Use encryption! Java Spring uses BCrypt be default, don't mess with it like on this site, this [UltimateEncoder](blob/master/src/main/java/sec/project/config/UltimateEncoder.java) simply isn't up to its name.
+Use encryption! Java Spring uses BCrypt be default, don't mess with it like on this site, this [UltimateEncoder](src/main/java/sec/project/config/UltimateEncoder.java) simply isn't up to its name.
 
 ### A5: Broken Access Control
 #### Problem
